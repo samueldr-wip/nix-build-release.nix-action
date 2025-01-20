@@ -56,11 +56,11 @@ runs:
   # 
   # ¯\_(ツ)_/¯
   env:
-    INPUT_ATTRIBUTES: ${{ input.attributes }}
-    INPUT_EXPRESSION_FILE: ${{ input.expression-file }}
-    INPUT_NIX_BUILD_EXPRESSION: ${{ input.nix-build-expression }}
-    INPUT_NIX_BUILD_EXTRA_ARGUMENTS: ${{ input.nix-build-extra-arguments }}
-    INPUT_NIX_PATH: ${{ input.nix-path }}
+    INPUT_ATTRIBUTES: ${{ inputs.attributes }}
+    INPUT_EXPRESSION_FILE: ${{ inputs.expression-file }}
+    INPUT_NIX_BUILD_EXPRESSION: ${{ inputs.nix-build-expression }}
+    INPUT_NIX_BUILD_EXTRA_ARGUMENTS: ${{ inputs.nix-build-extra-arguments }}
+    INPUT_NIX_PATH: ${{ inputs.nix-path }}
   steps:
     - name: Checkout repository
       if: ${{ inputs.checkout-repo == 'true' }}
