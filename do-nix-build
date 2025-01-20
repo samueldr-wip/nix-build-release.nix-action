@@ -18,7 +18,7 @@ if [[ "${INPUT_NIX_BUILD_EXPRESSION:-}" != "" ]]; then
 	# shellcheck disable=SC2206
 	ARGS+=( $INPUT_NIX_BUILD_EXPRESSION )
 else
-	if [[ "${INPUT_NIX_BUILD_EXPRESSION:-}" != "" ]]; then
+	if [[ "${INPUT_EXPRESSION_FILE:-}" != "" ]]; then
 		ARGS+=( "${INPUT_EXPRESSION_FILE}" )
 	else
 		for file in "${NIX_EXPRESSION_FILES[@]}"; do
