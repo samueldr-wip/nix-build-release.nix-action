@@ -15,11 +15,11 @@ inputs:
     default: ""
 
   nix-build-expression:
-    description: "When provided, `nix-build` will use the unquoted value as arguments instead of `expression-file. ⚠️ Beware string splitting semantics!"
+    description: "When provided, `nix-build` will use the unquoted value as arguments instead of `expression-file. ⚠️ Beware of string splitting semantics!"
     required: false
 
   nix-build-extra-arguments:
-    description: "When provided, the call to `nix-build` will use these appended extra arguments. ⚠️ Beware string splitting semantics!"
+    description: "When provided, the call to `nix-build` will use these appended extra arguments. ⚠️ Beware of string splitting semantics!"
     required: false
 
   nix-path:
