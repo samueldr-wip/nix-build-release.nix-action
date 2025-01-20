@@ -36,7 +36,7 @@ runs:
     - uses: samueldr/lix-gha-installer-action@8bb402f5d394241dece8c7dd9f5c9f459649a03a # v1
       if: ${{ inputs.installer-action == 'lix-gha-installer-action' }}
 
-    - name: `nix-build release.nix`
+    - name: nix-build release.nix
       shell: bash
       run: |
         bash ${{ github.action_path }}/do-nix-build
