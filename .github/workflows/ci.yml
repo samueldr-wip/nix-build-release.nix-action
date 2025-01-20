@@ -130,3 +130,56 @@ jobs:
 
       - name: Run common checks after the build
         uses: ./.github/support/extra-info
+
+  input-nix-build-extra-arguments:
+    name: "inputs: nix-build-extra-arguments"
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+
+      - name: nix-build
+        uses: ./
+        with:
+          nix-build-extra-arguments: --no-out-link
+
+      - name: check success
+        shell: bash
+        run: |
+          (
+          PS4=" $ "
+          set -eux -o pipefail
+          ! test -e result
+          ! test -e result-2
+          ! test -e result-3
+          )
+
+      - name: Run common checks after the build
+        uses: ./.github/support/extra-info
+
+  input-nix-build-extra-arguments:
+    name: "inputs: nix-build-extra-arguments"
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+
+      - name: nix-build
+        uses: ./
+        with:
+          expression-file: alternate-expression.nix
+          nix-path: test-path=./release.nix
+
+      - name: check success
+        shell: bash
+        run: |
+          (
+          PS4=" $ "
+          set -eux -o pipefail
+          test -e result
+          [[ "$(cat result-2)" == "c" ]]
+          ! test -e result-2
+          )
+
+      - name: Run common checks after the build
+        uses: ./.github/support/extra-info
