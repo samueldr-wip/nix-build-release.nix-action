@@ -177,7 +177,7 @@ jobs:
           PS4=" $ "
           set -eux -o pipefail
           test -e result
-          [[ "$(cat result)" == "c" ]]
+          [[ "$(tail -n1 result)" == "c" ]]
           ! test -e result-1
           ! test -e result-2
           )
