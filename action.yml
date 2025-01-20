@@ -1,0 +1,42 @@
+name: [WIP] “Smart” `nix-build` Action
+description: Opinionatedly automatically tries to run `nix-build release.nix`, and more!
+branding:
+  color: blue
+  icon: skip-forward
+
+inputs:
+  expression-file:
+    description: "The expression file to build"
+    required: false
+    default: "./release.nix"
+
+  nix-build-expression:
+    description: "When provided, `nix-build` will use the unquoted value as arguments instead of `expression-file. ⚠️ Beware string splitting semantics!"
+    required: false
+
+  nix-build-extra-arguments:
+    description: "When provided, the call to `nix-build` will use these appended extra arguments. ⚠️ Beware string splitting semantics!"
+    required: false
+
+  nix-path:
+    description: "When provided, NIX_PATH will be set to this value."
+    required: false
+
+  installer-action:
+    description: 'Installer action to use. Supports the following: [ "lix-gha-installer-action" "none" ]. Use "none" to bring your own.'
+    required: false
+    default: "lix-gha-installer-action"
+
+runs:
+  using: "composite"
+  steps:
+    - name: Checkout repository
+      uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+
+    - uses: samueldr/lix-gha-installer-action@8bb402f5d394241dece8c7dd9f5c9f459649a03a # v1
+      if: ${{ inputs.installer-action == "lix-gha-installer-action" }}
+
+    - name: `nix-build release.nix`
+      shell: bash
+      run: |
+        bash ${{ github.action_path }}/do-nix-build
