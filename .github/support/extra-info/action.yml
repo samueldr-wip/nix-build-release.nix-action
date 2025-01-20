@@ -17,6 +17,7 @@ runs:
         (
         PS4=" $ "
         set -eux -o pipefail
+        shopt -s nullglob
         ls -l
         for f in result*; do
           cat "$f"
