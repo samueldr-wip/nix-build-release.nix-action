@@ -1,10 +1,14 @@
 name: "<WIP> “Smart” `nix-build` Action"
 description: "Opinionatedly automatically tries to run nix-build release.nix, and a lot more common use-cases!"
-#branding:
-#  color: blue
-#  icon: skip-forward
+branding:
+  color: blue
+  icon: skip-forward
 
 inputs:
+  #
+  # Configurations affecting the Nix build
+  #
+
   expression-file:
     description: "The expression file to build. When missing, it will try in order: [ ./release.nix ./default.nix ]"
     required: false
@@ -37,7 +41,7 @@ inputs:
     default: "lix-gha-installer-action"
 
   cache-action:
-    description: 'Cache action to use. Supports the following: [ "DeterminateSystems/magic-nix-cache" "none" ]. Use "none" to bring your own.'
+    description: 'Cache action to use. Supports the following: [ "DeterminateSystems/magic-nix-cache" "none" ]. Use "none" to disable or bring your own.'
     required: false
     default: "DeterminateSystems/magic-nix-cache"
 
