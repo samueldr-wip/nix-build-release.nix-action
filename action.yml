@@ -50,17 +50,6 @@ inputs:
 
 runs:
   using: "composite"
-  #
-  # > If the action is written using a composite, then it will not automatically get INPUT_<VARIABLE_NAME>.
-  #  - https://docs.github.com/en/actions/sharing-automations/creating-actions/metadata-syntax-for-github-actions#inputs
-  # 
-  # ¯\_(ツ)_/¯
-  env:
-    INPUT_ATTRIBUTES: ${{ inputs.attributes }}
-    INPUT_EXPRESSION_FILE: ${{ inputs.expression-file }}
-    INPUT_NIX_BUILD_EXPRESSION: ${{ inputs.nix-build-expression }}
-    INPUT_NIX_BUILD_EXTRA_ARGUMENTS: ${{ inputs.nix-build-extra-arguments }}
-    INPUT_NIX_PATH: ${{ inputs.nix-path }}
   steps:
     - name: Checkout repository
       if: ${{ inputs.checkout-repo == 'true' }}
@@ -73,6 +62,17 @@ runs:
       if: ${{ inputs.cache-action == 'DeterminateSystems/magic-nix-cache' }}
 
     - name: nix-build release.nix
+      #
+      # > If the action is written using a composite, then it will not automatically get INPUT_<VARIABLE_NAME>.
+      #  - https://docs.github.com/en/actions/sharing-automations/creating-actions/metadata-syntax-for-github-actions#inputs
+      # 
+      # ¯\_(ツ)_/¯
+      env:
+        INPUT_ATTRIBUTES: ${{ inputs.attributes }}
+        INPUT_EXPRESSION_FILE: ${{ inputs.expression-file }}
+        INPUT_NIX_BUILD_EXPRESSION: ${{ inputs.nix-build-expression }}
+        INPUT_NIX_BUILD_EXTRA_ARGUMENTS: ${{ inputs.nix-build-extra-arguments }}
+        INPUT_NIX_PATH: ${{ inputs.nix-path }}
       shell: bash
       run: |
         bash ${{ github.action_path }}/do-nix-build
