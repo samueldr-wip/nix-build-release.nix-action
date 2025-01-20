@@ -1,4 +1,4 @@
-name: [WIP] “Smart” `nix-build` Action
+name: “Smart” `nix-build` Action
 description: Opinionatedly automatically tries to run `nix-build release.nix`, and more!
 branding:
   color: blue
