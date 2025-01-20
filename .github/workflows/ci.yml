@@ -42,3 +42,56 @@ jobs:
 
       - name: Run common checks after the build
         uses: ./.github/support/extra-info
+
+  expression-file:
+    name: "inputs: expression-file"
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+
+      - name: nix-build
+        uses: ./
+        with:
+          expression-file: alternate-expression.nix
+
+      - name: check success
+        shell: bash
+        run: |
+          (
+          PS4=" $ "
+          set -eux -o pipefail
+          cat result
+          [[ "$(cat result)" == "alt-ok" ]]
+          )
+
+      - name: Run common checks after the build
+        uses: ./.github/support/extra-info
+
+  expression-file:
+    name: "inputs: attributes"
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+
+      - name: nix-build
+        uses: ./
+        with:
+          attributes: b a
+
+      - name: check success
+        shell: bash
+        run: |
+          (
+          PS4=" $ "
+          set -eux -o pipefail
+          test -e result
+          [[ "$(cat result)" == "b" ]]
+          test -e result-1
+          [[ "$(cat result-1)" == "a" ]]
+          ! test -e result-2
+          )
+
+      - name: Run common checks after the build
+        uses: ./.github/support/extra-info
