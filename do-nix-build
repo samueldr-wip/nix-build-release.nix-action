@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+
+PS4=" $ "
+set -eu -o pipefail
+
+ARGS=( )
+
+if [[ "${INPUT_NIX_BUILD_EXPRESSION:-}" != "" ]]; then
+	ARGS+=( $INPUT_NIX_BUILD_EXPRESSION )
+else
+	ARGS+=( "${INPUT_EXPRESSION_FILE:-release.nix}" )
+fi
+if [[ "${INPUT_NIX_BUILD_EXTRA_ARGUMENTS:-}" != "" ]]; then
+	ARGS+=( $INPUT_NIX_BUILD_EXTRA_ARGUMENTS )
+fi
+
+if [[ "${INPUT_NIX_PATH:-}" != "" ]]; then
+	export NIX_PATH="$INPUT_NIX_PATH"
+fi
+
+(
+set -x
+exec nix-build "${ARGS[@]}" "$@"
+)
