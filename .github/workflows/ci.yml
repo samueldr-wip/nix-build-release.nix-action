@@ -43,7 +43,7 @@ jobs:
       - name: Run common checks after the build
         uses: ./.github/support/extra-info
 
-  expression-file:
+  input-expression-file:
     name: "inputs: expression-file"
     runs-on: ubuntu-24.04
     steps:
@@ -68,7 +68,7 @@ jobs:
       - name: Run common checks after the build
         uses: ./.github/support/extra-info
 
-  expression-file:
+  input-attributes:
     name: "inputs: attributes"
     runs-on: ubuntu-24.04
     steps:
