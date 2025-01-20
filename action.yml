@@ -1,5 +1,5 @@
 name: "<WIP> “Smart” `nix-build` Action"
-description: "Opinionatedly automatically tries to run nix-build release.nix, and more!"
+description: "Opinionatedly automatically tries to run nix-build release.nix, and a lot more common use-cases!"
 #branding:
 #  color: blue
 #  icon: skip-forward
@@ -22,15 +22,24 @@ inputs:
     description: "When provided, NIX_PATH will be set to this value."
     required: false
 
+  #
+  # Default actions involved
+  #
+
+  checkout-repo:
+    description: 'Whether the repository will be checked-out automatically with the actions/checkout action. (Use "false" to bring your own checkout action alternative.)'
+    required: false
+    default: "true"
+
   installer-action:
     description: 'Installer action to use. Supports the following: [ "lix-gha-installer-action" "none" ]. Use "none" to bring your own.'
     required: false
     default: "lix-gha-installer-action"
 
-  checkout-repo:
-    description: "Whether the repository will be checked-out automatically."
+  cache-action:
+    description: 'Cache action to use. Supports the following: [ "DeterminateSystems/magic-nix-cache" "none" ]. Use "none" to bring your own.'
     required: false
-    default: "true"
+    default: "DeterminateSystems/magic-nix-cache"
 
 runs:
   using: "composite"
@@ -41,6 +50,9 @@ runs:
 
     - uses: samueldr/lix-gha-installer-action@8bb402f5d394241dece8c7dd9f5c9f459649a03a # v1
       if: ${{ inputs.installer-action == 'lix-gha-installer-action' }}
+
+    - uses: DeterminateSystems/magic-nix-cache@fbf0bbed9401ae4069096a6025bb624f20cd4f4c # v0.1.3
+      if: ${{ inputs.cache-action == 'DeterminateSystems/magic-nix-cache' }}
 
     - name: nix-build release.nix
       shell: bash
