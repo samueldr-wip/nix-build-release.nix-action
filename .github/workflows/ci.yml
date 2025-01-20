@@ -8,20 +8,22 @@ on:
 
 jobs:
   do-it:
-    name: Simple tests (${{ matrix.nix }}/${{ matrix.os }})
+    name: Environments check (nix=${{ matrix.nix }};cache=${{ matrix.cache }};os=${{ matrix.os }})
     strategy:
       fail-fast: false
       matrix:
+        # Testing the different inputs...
         nix:
-          - none
           - lix-gha-installer-action
+          - none
+        cache:
+          - DeterminateSystems/magic-nix-cache
+          - none
         os: # https://docs.github.com/en/actions/using-github-hosted-runners/using-github-hosted-runners/about-github-hosted-runners#standard-github-hosted-runners-for-public-repositories
-          - ubuntu-22.04
+          # We don't need to test *too* deeply. Otherwise our matrix becomes huge...
           - ubuntu-24.04
-          - ubuntu-22.04-arm
           - ubuntu-24.04-arm
           - macos-13 # Last x86_64
-          - macos-14 # aarch64
           - macos-15 # aarch64
     runs-on: ${{ matrix.os }}
     steps:
@@ -36,5 +38,7 @@ jobs:
         uses: ./
         with:
           installer-action: ${{ matrix.nix }}
+          cache-action: ${{ matrix.cache }}
 
-      - uses: ./.github/support/extra-info
+      - name: Run common checks after the build
+        uses: ./.github/support/extra-info
