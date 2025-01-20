@@ -1,7 +1,11 @@
 #!/usr/bin/env bash
 
-PS4=" $ "
+PS4=" [do-nix-build] "
 set -eu -o pipefail
+
+if [[ ${ACTIONS_RUNNER_DEBUG:-} == "true" ]]; then
+	set -x
+fi
 
 NIX_EXPRESSION_FILES=(
 	./release.nix
@@ -43,6 +47,7 @@ if [[ "${INPUT_NIX_PATH:-}" != "" ]]; then
 fi
 
 (
+PS4=" $ "
 set -x
 exec nix-build "${ARGS[@]}" "$@"
 )
