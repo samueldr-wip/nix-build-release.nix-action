@@ -12,7 +12,10 @@ inputs:
   expression-file:
     description: "The expression file to build. When missing, it will try in order: [ ./release.nix ./default.nix ]"
     required: false
-    default: ""
+
+  attributes:
+    description: "Attributes to build from the expression. When missing, it will follow the default Nix semantics around build outputs."
+    required: false
 
   nix-build-expression:
     description: "When provided, `nix-build` will use the unquoted value as arguments instead of `expression-file. ⚠️ Beware of string splitting semantics!"
