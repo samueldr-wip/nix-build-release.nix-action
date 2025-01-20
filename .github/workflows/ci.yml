@@ -1,0 +1,47 @@
+name: "CI"
+on:
+  pull_request:
+  push:
+    branches:
+      - "released"
+
+jobs:
+  do-it:
+    name: Unconfigured defaults (${{ matrix.os }})
+    strategy:
+      fail-fast: false
+      matrix:
+        os: # https://docs.github.com/en/actions/using-github-hosted-runners/using-github-hosted-runners/about-github-hosted-runners#standard-github-hosted-runners-for-public-repositories
+          - ubuntu-22.04
+          - ubuntu-24.04
+          - ubuntu-22.04-arm
+          - ubuntu-24.04-arm
+          - macos-13 # Last x86_64
+          - macos-14 # aarch64
+          - macos-15 # aarch64
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Test this action...
+        uses: ./
+      - name: Environment information...
+        shell: bash
+        run: |
+          (
+          PS4=" $ "
+          set -eux -o pipefail
+          env | grep -i nix
+          cat /etc/nix/nix.conf
+          )
+      - name: Doing additional stuff with the test outputs...
+        shell: bash
+        run: |
+          (
+          PS4=" $ "
+          set -eux -o pipefail
+          ls -l
+          for f in result*; do
+            cat "$f"
+          done
+          )
+
+
