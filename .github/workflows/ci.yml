@@ -71,8 +71,6 @@ jobs:
   input-attributes:
     name: "inputs: attributes"
     runs-on: ubuntu-24.04
-    env:
-      ACTIONS_RUNNER_DEBUG: true
     steps:
       - name: Checkout repository
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
@@ -90,9 +88,9 @@ jobs:
           set -eux -o pipefail
           test -e result
           [[ "$(cat result)" == "b" ]]
-          test -e result-1
-          [[ "$(cat result-1)" == "a" ]]
-          ! test -e result-2
+          test -e result-2
+          [[ "$(cat result-2)" == "a" ]]
+          ! test -e result-3
           )
 
       - name: Run common checks after the build
