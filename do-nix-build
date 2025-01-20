@@ -3,14 +3,31 @@
 PS4=" $ "
 set -eu -o pipefail
 
+NIX_EXPRESSION_FILES=(
+	./release.nix
+	./default.nix
+)
+
 ARGS=( )
 
 if [[ "${INPUT_NIX_BUILD_EXPRESSION:-}" != "" ]]; then
+	# shellcheck disable=SC2206
 	ARGS+=( $INPUT_NIX_BUILD_EXPRESSION )
 else
-	ARGS+=( "${INPUT_EXPRESSION_FILE:-release.nix}" )
+	if [[ "${INPUT_NIX_BUILD_EXPRESSION:-}" != "" ]]; then
+		ARGS+=( "${INPUT_EXPRESSION_FILE}" )
+	else
+		for file in "${NIX_EXPRESSION_FILES[@]}"; do
+			if test -e "$file"; then
+				ARGS+=( "$file" )
+				break
+			fi
+		done
+	fi
 fi
+
 if [[ "${INPUT_NIX_BUILD_EXTRA_ARGUMENTS:-}" != "" ]]; then
+	# shellcheck disable=SC2206
 	ARGS+=( $INPUT_NIX_BUILD_EXTRA_ARGUMENTS )
 fi
 
