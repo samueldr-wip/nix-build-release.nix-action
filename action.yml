@@ -6,9 +6,9 @@ description: "Opinionatedly automatically tries to run nix-build release.nix, an
 
 inputs:
   expression-file:
-    description: "The expression file to build"
+    description: "The expression file to build. When missing, it will try in order: [ ./release.nix ./default.nix ]"
     required: false
-    default: "./release.nix"
+    default: ""
 
   nix-build-expression:
     description: "When provided, `nix-build` will use the unquoted value as arguments instead of `expression-file. ⚠️ Beware string splitting semantics!"
