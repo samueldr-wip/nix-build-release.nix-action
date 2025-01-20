@@ -13,10 +13,12 @@ NIX_EXPRESSION_FILES=(
 )
 
 ARGS=( )
+STDIN=""
 
-if [[ "${INPUT_NIX_BUILD_EXPRESSION:-}" != "" ]]; then
+if [[ "${INPUT_NIX_EXPRESSION:-}" != "" ]]; then
 	# shellcheck disable=SC2206
-	ARGS+=( $INPUT_NIX_BUILD_EXPRESSION )
+	ARGS+=( - )
+	STDIN="$INPUT_NIX_EXPRESSION"
 else
 	if [[ "${INPUT_EXPRESSION_FILE:-}" != "" ]]; then
 		ARGS+=( "${INPUT_EXPRESSION_FILE}" )
@@ -46,8 +48,11 @@ if [[ "${INPUT_NIX_PATH:-}" != "" ]]; then
 	export NIX_PATH="$INPUT_NIX_PATH"
 fi
 
-(
 PS4=" $ "
 set -x
-exec nix-build "${ARGS[@]}" "$@"
+# Shoving stdin into `nix-build` when not used (via `-`) is not an error.
+# Let's use that fact, and always shove in STDIN.
+printf "%s" "$STDIN" | (
+	set -x
+	exec nix-build "${ARGS[@]}" "$@"
 )

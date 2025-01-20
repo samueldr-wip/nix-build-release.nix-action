@@ -17,8 +17,8 @@ inputs:
     description: "Attributes to build from the expression. When missing, it will follow the default Nix semantics around build outputs."
     required: false
 
-  nix-build-expression:
-    description: "When provided, `nix-build` will use the unquoted value as arguments instead of `expression-file. ⚠️ Beware of string splitting semantics!"
+  nix-expression:
+    description: "When provided, `nix-build` will use the value with the standard input instead of `expression-file`."
     required: false
 
   nix-build-extra-arguments:
@@ -70,7 +70,7 @@ runs:
       env:
         INPUT_ATTRIBUTES: ${{ inputs.attributes }}
         INPUT_EXPRESSION_FILE: ${{ inputs.expression-file }}
-        INPUT_NIX_BUILD_EXPRESSION: ${{ inputs.nix-build-expression }}
+        INPUT_NIX_EXPRESSION: ${{ inputs.nix-expression }}
         INPUT_NIX_BUILD_EXTRA_ARGUMENTS: ${{ inputs.nix-build-extra-arguments }}
         INPUT_NIX_PATH: ${{ inputs.nix-path }}
       shell: bash

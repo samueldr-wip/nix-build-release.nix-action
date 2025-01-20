@@ -95,3 +95,38 @@ jobs:
 
       - name: Run common checks after the build
         uses: ./.github/support/extra-info
+
+  input-nix-expression:
+    name: "inputs: nix-expression"
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+
+      - name: nix-build
+        uses: ./
+        with:
+          # Written in this way to stress-test handling
+          nix-expression: |
+            { pkgs ? (import (import ./npins).nixpkgs {})
+            }:
+
+            pkgs.callPackage (
+              { runCommand }:
+              runCommand "expr" {} ''
+                echo expr-ok > $out
+              ''
+            ) {}
+
+      - name: check success
+        shell: bash
+        run: |
+          (
+          PS4=" $ "
+          set -eux -o pipefail
+          cat result
+          [[ "$(cat result)" == "expr-ok" ]]
+          )
+
+      - name: Run common checks after the build
+        uses: ./.github/support/extra-info
