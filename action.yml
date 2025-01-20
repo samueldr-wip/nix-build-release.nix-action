@@ -1,4 +1,4 @@
-name: Smart nix-build Action
+name: testing a b c d this action samueldr-wip
 description: Opinionatedly automatically tries to run nix-build release.nix, and more!
 #branding:
 #  color: blue
