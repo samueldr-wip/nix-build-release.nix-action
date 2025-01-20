@@ -167,7 +167,7 @@ jobs:
       - name: nix-build
         uses: ./
         with:
-          expression-file: alternate-expression.nix
+          expression-file: nix-path-test.nix
           nix-path: test-path=./release.nix
 
       - name: check success
