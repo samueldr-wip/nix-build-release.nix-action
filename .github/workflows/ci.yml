@@ -37,26 +37,4 @@ jobs:
         with:
           installer-action: ${{ matrix.nix }}
 
-      - name: Environment information...
-        shell: bash
-        run: |
-          (
-          PS4=" $ "
-          set -eux -o pipefail
-          env | grep -i nix
-          cat /etc/nix/nix.conf
-          )
-
-      - name: Doing additional stuff with the test outputs...
-        shell: bash
-        run: |
-          (
-          PS4=" $ "
-          set -eux -o pipefail
-          ls -l
-          for f in result*; do
-            cat "$f"
-          done
-          )
-
-
+      - uses: ./.github/workflows/extra-info.yml
