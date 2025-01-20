@@ -8,10 +8,13 @@ on:
 
 jobs:
   do-it:
-    name: Unconfigured defaults (${{ matrix.os }})
+    name: Simple tests (${{ matrix.nix }}/${{ matrix.os }})
     strategy:
       fail-fast: false
       matrix:
+        nix:
+          - none
+          - lix-gha-installer-action
         os: # https://docs.github.com/en/actions/using-github-hosted-runners/using-github-hosted-runners/about-github-hosted-runners#standard-github-hosted-runners-for-public-repositories
           - ubuntu-22.04
           - ubuntu-24.04
@@ -25,8 +28,14 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
 
+      # Testing BYO nix.
+      - uses: cachix/install-nix-action@08dcb3a5e62fa31e2da3d490afc4176ef55ecd72 # v30
+        if: ${{ matrix.nix == 'none' }}
+
       - name: Test this action...
         uses: ./
+        with:
+          installer-action: ${{ matrix.nix }}
 
       - name: Environment information...
         shell: bash
