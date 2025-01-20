@@ -50,6 +50,17 @@ inputs:
 
 runs:
   using: "composite"
+  #
+  # > If the action is written using a composite, then it will not automatically get INPUT_<VARIABLE_NAME>.
+  #  - https://docs.github.com/en/actions/sharing-automations/creating-actions/metadata-syntax-for-github-actions#inputs
+  # 
+  # ¯\_(ツ)_/¯
+  env:
+    INPUT_ATTRIBUTES: ${{ input.attributes }}
+    INPUT_EXPRESSION_FILE: ${{ input.expression-file }}
+    INPUT_NIX_BUILD_EXPRESSION: ${{ input.nix-build-expression }}
+    INPUT_NIX_BUILD_EXTRA_ARGUMENTS: ${{ input.nix-build-extra-arguments }}
+    INPUT_NIX_PATH: ${{ input.nix-path }}
   steps:
     - name: Checkout repository
       if: ${{ inputs.checkout-repo == 'true' }}
