@@ -10,23 +10,35 @@ inputs:
   #
 
   expression-file:
-    description: "The expression file to build. When missing, it will try in order: [ ./release.nix ./default.nix ]"
+    description: |
+      The expression file to build.
+      
+      When missing, it will try in order: `[ ./release.nix ./default.nix ]`.
     required: false
 
   attributes:
-    description: "Attributes to build from the expression. When missing, it will follow the default Nix semantics around build outputs."
+    description: |
+      Attributes to build from the expression.
+
+      When missing, it will follow the default Nix semantics around build outputs.
     required: false
 
   nix-expression:
-    description: "When provided, `nix-build` will use the value with the standard input instead of `expression-file`."
+    description: |
+      When provided, `nix-build` will pass the given value to the standard input, and build that instead of `expression-file`.
     required: false
 
   nix-build-extra-arguments:
-    description: "When provided, the call to `nix-build` will use these appended extra arguments. ⚠️ Beware of string splitting semantics!"
+    description: |
+      When provided, the call to `nix-build` will use these appended extra arguments.
+
+      > [!WARNING]
+      > Beware of string splitting semantics!
     required: false
 
   nix-path:
-    description: "When provided, NIX_PATH will be set to this value."
+    description: |
+      When provided, `NIX_PATH` will be set to this value.
     required: false
 
   #
@@ -34,22 +46,38 @@ inputs:
   #
 
   checkout-repo:
-    description: 'Whether the repository will be checked-out automatically with the actions/checkout action. (Use "false" to bring your own checkout action alternative.)'
+    description: |
+      Whether the repository will be checked-out automatically with the actions/checkout action.
+
+      Use `false` to bring your own checkout action alternative.
     required: false
     default: "true"
 
   installer-action:
-    description: 'Installer action to use. Supports the following: [ "lix-gha-installer-action" "none" ]. Use "none" to bring your own.'
+    description: |
+      Installer action to use.
+
+      Supports the following: `[ "lix-gha-installer-action" "none" ]`.
+
+      Use `none` to bring your own.
     required: false
     default: "lix-gha-installer-action"
 
   cache-action:
-    description: 'Cache action to use. Supports the following: [ "DeterminateSystems/magic-nix-cache" "none" ]. Use "none" to disable or bring your own.'
+    description: |
+      Cache action to use.
+
+      Supports the following: `[ "DeterminateSystems/magic-nix-cache" "none" ]`.
+
+      Use "none" to disable or bring your own.
     required: false
     default: "DeterminateSystems/magic-nix-cache"
 
   #upload-action:
-  #  description: 'Store paths upload action to use. Supports the following: [ "none" ]. None are configured by default.'
+  #  description: |
+  #    Store paths upload action to use.
+  #
+  #    Supports the following: `[ "none" ]`.
   #  required: false
   #  default: "none"
 
