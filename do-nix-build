@@ -49,7 +49,6 @@ if [[ "${INPUT_NIX_PATH:-}" != "" ]]; then
 fi
 
 PS4=" $ "
-set -x
 # Shoving stdin into `nix-build` when not used (via `-`) is not an error.
 # Let's use that fact, and always shove in STDIN.
 printf "%s" "$STDIN" | (
