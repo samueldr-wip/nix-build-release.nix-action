@@ -72,7 +72,37 @@ Be mindful about interactions between some inputs. Read [the script](do-nix-buil
 
 <!-- ACTION.YML INPUTS START -->
 
-lol
+### expression-file
+
+The expression file to build. When missing, it will try in order: [ ./release.nix ./default.nix ]
+
+### attributes
+
+Attributes to build from the expression. When missing, it will follow the default Nix semantics around build outputs.
+
+### nix-expression
+
+When provided, `nix-build` will use the value with the standard input instead of `expression-file`.
+
+### nix-build-extra-arguments
+
+When provided, the call to `nix-build` will use these appended extra arguments. ⚠️ Beware of string splitting semantics!
+
+### nix-path
+
+When provided, NIX_PATH will be set to this value.
+
+### checkout-repo
+
+Whether the repository will be checked-out automatically with the actions/checkout action. (Use "false" to bring your own checkout action alternative.)
+
+### installer-action
+
+Installer action to use. Supports the following: [ "lix-gha-installer-action" "none" ]. Use "none" to bring your own.
+
+### cache-action
+
+Cache action to use. Supports the following: [ "DeterminateSystems/magic-nix-cache" "none" ]. Use "none" to disable or bring your own.
 
 <!-- ACTION.YML INPUTS END -->
 

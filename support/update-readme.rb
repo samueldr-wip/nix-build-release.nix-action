@@ -4,14 +4,50 @@
 
 require "yaml"
 
+CHECK = ARGV.include?("--check")
+
+def marker(which, direction)
+  "<!-- ACTION.YML #{which.upcase} #{direction.upcase} -->"
+end
+
+def replace_markers(str, which, content)
+  str.gsub(
+    %r{#{marker(which, "start")}.*#{marker(which, "end")}}m,
+    [
+      marker(which, "start"),
+      "",
+      content,
+      "",
+      marker(which, "end"),
+    ].join("\n")
+  )
+end
+
 TOP = File.join(__dir__(), "..")
 README = File.join(TOP, "README.md")
 ACTION = File.join(TOP, "action.yml")
 
 action_data = YAML.load(File.read(ACTION))
+formatted_inputs = action_data["inputs"].map do |key, data|
+  [
+    "### #{key}",
+    "",
+    data["description"]
+  ].join("\n")
+end.join("\n\n")
 
-pp action_data["inputs"]
+readme = File.read(README)
+new_contents = replace_markers(readme, "inputs", formatted_inputs)
+
+unless readme == new_contents
+  if CHECK
+    $stderr.puts "NOTE: generated README sections differ from current README."
+    $stderr.puts "      run support/update-readme.rb to update, and then make a new commit."
+    exit 1
+  else
+    File.write(README, new_contents)
+  end
+end
 
 
 #vim ft=ruby
-
