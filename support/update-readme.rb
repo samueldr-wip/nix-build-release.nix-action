@@ -33,7 +33,7 @@ formatted_inputs = action_data["inputs"].map do |key, data|
     "### `#{key}`",
     if data["default"] then [
         "",
-        "*Default: `#{data["default"]}`*"
+        "*Default: `#{data["default"]}`*",
     ] else [] end,
     "",
     data["description"]
@@ -46,8 +46,8 @@ new_contents = replace_markers(readme, "inputs", formatted_inputs)
 unless readme == new_contents
   if CHECK
     message = [
-      "NOTE: generated README sections differ from current README."
-      "      run support/update-readme.rb to update, and then make a new commit."
+      "NOTE: generated README sections differ from current README.",
+      "      run support/update-readme.rb to update, and then make a new commit.",
     ].join("\n")
     $stderr.puts ""
     $stderr.puts %Q{::error title="Documentation is not up-to-date!"::#{message.gsub("\n", "%0A")}}
