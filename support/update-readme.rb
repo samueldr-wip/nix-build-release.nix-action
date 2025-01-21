@@ -45,8 +45,14 @@ new_contents = replace_markers(readme, "inputs", formatted_inputs)
 
 unless readme == new_contents
   if CHECK
-    $stderr.puts "NOTE: generated README sections differ from current README."
-    $stderr.puts "      run support/update-readme.rb to update, and then make a new commit."
+    message = [
+      "NOTE: generated README sections differ from current README."
+      "      run support/update-readme.rb to update, and then make a new commit."
+    ].join("\n")
+    $stderr.puts ""
+    $stderr.puts %Q{::error title="Documentation is not up-to-date!"::#{message.gsub("\n", "%0A")}}
+    $stderr.puts ""
+    $stderr.puts message
     exit 1
   else
     File.write(README, new_contents)
