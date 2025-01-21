@@ -63,6 +63,21 @@ The first of the following files found will be `nix-build`'t:
 
 * * *
 
+Configuring the action
+----------------------
+
+There are a couple inputs you can provide to this action.
+
+Be mindful about interactions between some inputs. Read [the script](do-nix-build) and [the action](action.yml) to better understand how they interact.
+
+<!-- ACTION.YML INPUTS START -->
+
+lol
+
+<!-- ACTION.YML INPUTS END -->
+
+* * *
+
 FAQ
 ---
 
