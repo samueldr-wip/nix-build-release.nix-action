@@ -22,5 +22,6 @@ jobs:
           (
           PS4=" $ "
           set -eux -o pipefail
+          export LC_CTYPE=en_US.UTF-8
           support/update-readme.rb --check
           )
