@@ -69,7 +69,7 @@ inputs:
 
       Supports the following: `[ "DeterminateSystems/magic-nix-cache" "none" ]`.
 
-      Use "none" to disable or bring your own.
+      Use `none` to disable or bring your own.
     required: false
     default: "DeterminateSystems/magic-nix-cache"
 

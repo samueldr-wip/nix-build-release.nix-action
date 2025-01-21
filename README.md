@@ -132,7 +132,7 @@ Cache action to use.
 
 Supports the following: `[ "DeterminateSystems/magic-nix-cache" "none" ]`.
 
-Use "none" to disable or bring your own.
+Use `none` to disable or bring your own.
 
 
 <!-- ACTION.YML INPUTS END -->
