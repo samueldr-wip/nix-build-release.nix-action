@@ -72,37 +72,68 @@ Be mindful about interactions between some inputs. Read [the script](do-nix-buil
 
 <!-- ACTION.YML INPUTS START -->
 
-### expression-file
+### `expression-file`
 
-The expression file to build. When missing, it will try in order: [ ./release.nix ./default.nix ]
+The expression file to build.
 
-### attributes
+When missing, it will try in order: `[ ./release.nix ./default.nix ]`.
 
-Attributes to build from the expression. When missing, it will follow the default Nix semantics around build outputs.
 
-### nix-expression
+### `attributes`
 
-When provided, `nix-build` will use the value with the standard input instead of `expression-file`.
+Attributes to build from the expression.
 
-### nix-build-extra-arguments
+When missing, it will follow the default Nix semantics around build outputs.
 
-When provided, the call to `nix-build` will use these appended extra arguments. ⚠️ Beware of string splitting semantics!
 
-### nix-path
+### `nix-expression`
 
-When provided, NIX_PATH will be set to this value.
+When provided, `nix-build` will pass the given value to the standard input, and build that instead of `expression-file`.
 
-### checkout-repo
 
-Whether the repository will be checked-out automatically with the actions/checkout action. (Use "false" to bring your own checkout action alternative.)
+### `nix-build-extra-arguments`
 
-### installer-action
+When provided, the call to `nix-build` will use these appended extra arguments.
 
-Installer action to use. Supports the following: [ "lix-gha-installer-action" "none" ]. Use "none" to bring your own.
+> [!WARNING]
+> Beware of string splitting semantics!
 
-### cache-action
 
-Cache action to use. Supports the following: [ "DeterminateSystems/magic-nix-cache" "none" ]. Use "none" to disable or bring your own.
+### `nix-path`
+
+When provided, `NIX_PATH` will be set to this value.
+
+
+### `checkout-repo`
+
+*Default: `true`*
+
+Whether the repository will be checked-out automatically with the actions/checkout action.
+
+Use `false` to bring your own checkout action alternative.
+
+
+### `installer-action`
+
+*Default: `lix-gha-installer-action`*
+
+Installer action to use.
+
+Supports the following: `[ "lix-gha-installer-action" "none" ]`.
+
+Use `none` to bring your own.
+
+
+### `cache-action`
+
+*Default: `DeterminateSystems/magic-nix-cache`*
+
+Cache action to use.
+
+Supports the following: `[ "DeterminateSystems/magic-nix-cache" "none" ]`.
+
+Use "none" to disable or bring your own.
+
 
 <!-- ACTION.YML INPUTS END -->
 
