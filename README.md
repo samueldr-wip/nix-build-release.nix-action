@@ -1,0 +1,95 @@
+`nix-build` action
+==================
+
+This `nix-build` action is an opinionated all-inclusive action that will
+
+ - Checkout your code
+ - Install a Nix language interpreter and daemon
+ - Setup artifacts caching
+ - Automatically run `nix-build` with *heuristics* applied
+
+* * *
+
+Usage
+-----
+
+Here's a simple sample to get you started:
+
+```yaml
+name: "CI"
+
+on:
+  pull_request:
+  push:
+
+jobs:
+  build:
+    name: Build (${{ matrix.os }})
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - ubuntu-24.04
+          - macos-13 # most recent x86_64
+          - macos-15 # most recent aarch64
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: samueldr-wip/nix-build-release.nix-action@latest
+```
+
+> [!NOTE]
+> Prefer pinning to a released version, rather than following the latest branch.
+>
+> This applies to all actions.
+
+This sample will 
+
+* * *
+
+`nix-build` heuristics
+----------------------
+
+Heuristics is a big word for basically a small few options.
+
+The first of the following files found will be `nix-build`'t:
+
+ - `release.nix`
+ - `default.nix`
+
+> *This mirrors an older, yet still relevant, convention with Nix projects, where
+> the `default.nix` may expose a more involved API, and the `release.nix` expression
+> is used as a well-known way to build the expected outputs.
+
+
+* * *
+
+FAQ
+---
+
+### Can I use the `___` action instead?
+
+Maybe!
+
+As of right now, all steps (except building) are conditional.
+
+If you don't want to use the `actions/checkout` to checkout your repo, set `checkout-repo` to `false`.
+
+Similarly, all other actions are implemented as if they were an enum type, with the `none` value available to disable the step entirely.
+
+*Contributions welcome for alternative steps.*
+
+
+### What about Flakes?
+
+Currently unsupported, as I'm not using them myself.
+I don't think I could properly support the nuances of Flakes since I don't know them.
+
+*Contributions welcome to support Flakes appropriately.*
+
+
+### My `release.nix` is big and OOMs at eval
+
+Try making a [*matrix*](https://docs.github.com/en/actions/writing-workflows/choosing-what-your-workflow-does/running-variations-of-jobs-in-a-workflow) out of it,
+and use the `attributes` input to build one attribute at a time.
+
+This will also provide some parallelism, but unless done carefully, will not manage dependencies between attributes.
