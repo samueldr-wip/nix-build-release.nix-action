@@ -30,10 +30,14 @@ ACTION = File.join(TOP, "action.yml")
 action_data = YAML.load(File.read(ACTION))
 formatted_inputs = action_data["inputs"].map do |key, data|
   [
-    "### #{key}",
+    "### `#{key}`",
+    if data["default"] then [
+        "",
+        "*Default: `#{data["default"]}`*"
+    ] else [] end,
     "",
     data["description"]
-  ].join("\n")
+  ].flatten().join("\n")
 end.join("\n\n")
 
 readme = File.read(README)
