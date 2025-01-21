@@ -42,7 +42,10 @@ jobs:
 >
 > This applies to all actions.
 
-This sample will 
+This sample will effectively run `nix-build ./release.nix` or `nix-build ./default.nix` at the root of your repository.
+
+By default the artifacts will be sent to the cache, allowing future builds to resume from existing transitive builds (if relevant).
+
 
 * * *
 
@@ -155,12 +158,18 @@ Similarly, all other actions are implemented as if they were an enum type, with 
 *Contributions welcome for alternative steps.*
 
 
-### What about Flakes?
+### I want to upload the build to a binary cache
 
-Currently unsupported, as I'm not using them myself.
-I don't think I could properly support the nuances of Flakes since I don't know them.
+It is not supported at this moment, though a desired feature.
 
-*Contributions welcome to support Flakes appropriately.*
+*Contributions welcome to add support.*
+
+
+### I want upload outputs to a release
+
+This is not a desired feature, as it involves knowing too much about the intended use-case.
+
+Instead, you can safely add additional steps to upload artifacts to releases, just like you would otherwise.
 
 
 ### My `release.nix` is big and OOMs at eval
@@ -169,3 +178,11 @@ Try making a [*matrix*](https://docs.github.com/en/actions/writing-workflows/cho
 and use the `attributes` input to build one attribute at a time.
 
 This will also provide some parallelism, but unless done carefully, will not manage dependencies between attributes.
+
+
+### What about Flakes?
+
+Currently unsupported, as I'm not using them myself.
+I don't think I could properly support the nuances of Flakes since I don't know them.
+
+*Contributions welcome to support Flakes appropriately.*
