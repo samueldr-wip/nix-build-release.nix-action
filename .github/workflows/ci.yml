@@ -22,8 +22,8 @@ jobs:
         os: # https://docs.github.com/en/actions/using-github-hosted-runners/using-github-hosted-runners/about-github-hosted-runners#standard-github-hosted-runners-for-public-repositories
           # We don't need to test *too* deeply. Otherwise our matrix becomes huge...
           #- ubuntu-24.04
-          #- ubuntu-24.04-arm
-          - ubuntu-22.04-arm
+          - ubuntu-24.04-arm
+          #- ubuntu-22.04-arm
           #- macos-13 # Last x86_64
           #- macos-15 # aarch64
         try:
