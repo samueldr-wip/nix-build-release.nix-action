@@ -14,7 +14,8 @@ jobs:
       matrix:
         # Testing the different inputs...
         nix:
-          - lix-gha-installer-action
+          #- lix-gha-installer-action
+          - none
           - none
         cache:
           #- DeterminateSystems/magic-nix-cache
